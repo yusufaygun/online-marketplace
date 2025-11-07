@@ -99,7 +99,7 @@ class AdminController {
     }
 
     // admin adds a product to seller
-    // Mevcut seller'a ürün eklemek için endpoint
+    // Endpoint to add a product to an existing seller
     @PostMapping("/sellers/{sellerId}/products")
     public ApiResponse<SellerDto> addProductToSeller(@PathVariable Long sellerId, @RequestBody Product product) {
         SellerDto sellerDto = sellerService.addProductToSeller(sellerId, product);
@@ -115,7 +115,7 @@ class AdminController {
 
 
     // admin deletes a product from seller
-    // Mevcut seller'dan ürün çıkarmak için endpoint
+    // Endpoint to remove a product from an existing seller
     @DeleteMapping("/sellers/{sellerId}/products/{productId}")
     public ApiResponse<SellerDto> removeProductFromSeller(@PathVariable Long sellerId, @PathVariable Long productId) {
         SellerDto sellerDto = sellerService.removeProductFromSeller(sellerId, productId);

@@ -13,7 +13,7 @@ const CartPage = () => {
     if (newQuantity > 0) {
       updateCartItem(itemId, newQuantity);
     } else {
-      removeFromCart(itemId); // Eğer quantity 0 veya daha azsa ürünü sepetten kaldır
+      removeFromCart(itemId); // Remove product from cart if quantity is 0 or less
     }
   };
 

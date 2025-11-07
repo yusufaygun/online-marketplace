@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> productPage = productRepository.findAll(pageable);
 
-        // Page<ProductDto>'ya dönüştür
+        // Convert to Page<ProductDto>
         List<ProductDto> productDtos = productPage.stream()
                 .map(ProductMapper::mapEntityToDto)
                 .collect(Collectors.toList());

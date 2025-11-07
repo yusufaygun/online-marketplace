@@ -24,11 +24,11 @@ const useAdminRoute = () => {
 
         const role = response.data.data;
         if (role !== 'admin') {
-          router.push('/forbidden'); // Admin değilse Forbidden sayfasına yönlendir
+          router.push('/forbidden'); // Redirect to Forbidden page if not an admin
         }
       } catch (error) {
         console.error('Error checking admin role:', error);
-        router.push('/forbidden'); // Hata durumunda forbidden sayfasına yönlendir
+        router.push('/forbidden'); // Redirect to forbidden page on error
       }
     };
 

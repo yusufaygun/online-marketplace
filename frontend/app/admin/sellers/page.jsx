@@ -8,7 +8,7 @@ import useAdminRoute from '@/app/hooks/useAdminRoute';
 const BACKEND_URL = 'http://localhost:8080';
 
 const ManageSellers = () => {
-  useAdminRoute(); // Admin kontrolü burada 
+  useAdminRoute(); // Admin check here 
   const router = useRouter();
   const [sellers, setSellers] = useState([]);
   const [filteredSellers, setFilteredSellers] = useState([]);
@@ -45,7 +45,7 @@ const ManageSellers = () => {
       setSellers([...sellers, response.data]);
       setFilteredSellers([...filteredSellers, response.data]);
       setNewSeller({ name: '' });
-      // Sayfayı refreshle, bunu bir gözden geçir
+      // Refresh page, review this
       window.location.reload();
     } catch (error) {
       console.error('Error adding seller:', error);

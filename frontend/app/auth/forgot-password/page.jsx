@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-// şu anlık işlevsiz
+// Currently non-functional
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");

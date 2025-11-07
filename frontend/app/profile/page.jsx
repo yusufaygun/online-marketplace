@@ -8,7 +8,7 @@ import useUserRoute from '../hooks/useUserRoute';
 const BACKEND_URL = 'http://localhost:8080';
 
 const ProfilePage = () => {
-  useUserRoute(); // User kontrolü burada
+  useUserRoute(); // User check here
   const [user, setUser] = useState(null);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [blacklist, setBlacklist] = useState([]);
@@ -69,7 +69,7 @@ const ProfilePage = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        data: { productId },  // Bu şekilde productId'yi data olarak gönderiyoruz
+        data: { productId },  // Send productId as data in this way
       });
       setFavoriteProducts(favoriteProducts.filter(product => product.id !== productId));
     } catch (error) {
@@ -85,7 +85,7 @@ const ProfilePage = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        data: { sellerId },  // Bu şekilde sellerId'yi data olarak gönderiyoruz
+        data: { sellerId },  // Send sellerId as data in this way
       });
       setBlacklist(blacklist.filter(seller => seller.id !== sellerId));
     } catch (error) {

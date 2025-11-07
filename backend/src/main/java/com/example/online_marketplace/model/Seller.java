@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-// bu sellers ayrı bir role olabilir, onu düşün
+// Sellers could be a separate role, consider this
 @Getter
 @Setter
 @NoArgsConstructor

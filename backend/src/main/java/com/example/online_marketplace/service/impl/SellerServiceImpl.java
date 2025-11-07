@@ -40,7 +40,7 @@ public class SellerServiceImpl implements SellerService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Seller> sellerPage = sellerRepository.findAll(pageable);
 
-        // Page<SellerDto>'ya dönüştürme
+        // Convert to Page<SellerDto>
         List<SellerDto> sellerDtos = sellerPage.stream()
                 .map(SellerMapper::mapEntityToDto)
                 .collect(Collectors.toList());
@@ -59,7 +59,7 @@ public class SellerServiceImpl implements SellerService {
         Seller existingSeller = getSellerById(id);
         existingSeller.setName(sellerDetails.getName());
 
-        // Güncellenmiş seller'ı veritabanına kaydet
+        // Save updated seller to database
         Seller savedSeller = sellerRepository.save(existingSeller);
         return SellerMapper.mapEntityToDto(savedSeller);
     }
@@ -91,7 +91,7 @@ public class SellerServiceImpl implements SellerService {
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with the given ID."));
 
-        // Mevcut product'ı gelen bilgilerle güncelle
+        // Update existing product with incoming information
         existingProduct.setName(productDetails.getName());
         existingProduct.setPrice(productDetails.getPrice());
         existingProduct.setDescription(productDetails.getDescription());

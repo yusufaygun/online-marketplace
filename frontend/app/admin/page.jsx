@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import useAdminRoute from "../hooks/useAdminRoute";
 
 const AdminPage = () => {
-  useAdminRoute(); // Admin kontrolü burada 
+  useAdminRoute(); // Admin check here 
   const router = useRouter();
 
   return (

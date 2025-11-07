@@ -30,7 +30,7 @@ const LoginPage = () => {
         localStorage.setItem('token', data.data); // Store the JWT in localStorage
         console.log("JWT token stored in localStorage: " + localStorage.getItem('token'));
 
-        // Sayfayı yeniden yükleyerek NavBar'ın güncellenmesini sağla
+        // Reload page to update NavBar
         window.location.reload();
         //router.push("/profile"); // Redirect to homepage after login
     } catch (err) {

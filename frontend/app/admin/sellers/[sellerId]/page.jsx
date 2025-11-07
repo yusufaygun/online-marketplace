@@ -8,7 +8,7 @@ import useAdminRoute from '@/app/hooks/useAdminRoute';
 const BACKEND_URL = 'http://localhost:8080';
 
 const ProductManagement = () => {
-  useAdminRoute(); // Admin kontrolü burada 
+  useAdminRoute(); // Admin check here 
   const router = useRouter();
   const { sellerId } = useParams();
   const [products, setProducts] = useState([]);

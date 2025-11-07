@@ -10,7 +10,7 @@ public class ProductDto {
     private String name;
     private double price;
     private String description;
-    private String sellerName;  // Seller'ın sadece adı bu DTO'ya dahil olacak
-    private Long sellerId; // şaka ve de idsi
+    private String sellerName;  // Only the seller's name will be included in this DTO
+    private Long sellerId; // And also the seller's ID
 
 }

@@ -7,27 +7,27 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  // Local Storage'dan sepeti yükle
+  // Load cart from Local Storage
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     setCartItems(storedCart);
   }, []);
 
 
-  // Sepet güncellendiğinde `localStorage`'ı güncelle
+  // Update `localStorage` when cart is updated
   const addToCart = (item) => {
     const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
     let updatedCart;
 
     if (existingItem) {
-      // Eğer ürün zaten sepette varsa, quantity'yi artır
+      // If product already exists in cart, increase quantity
       updatedCart = cartItems.map(cartItem =>
         cartItem.id === item.id
           ? { ...cartItem, quantity: cartItem.quantity + 1 }
           : cartItem
       );
     } else {
-      // Ürün sepette değilse, sepete yeni ürün ekle
+      // If product is not in cart, add new product to cart
       updatedCart = [...cartItems, { ...item, quantity: 1 }];
     }
 

@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityAlreadyExistsException("User already exists with the given username.");
         }
 
-        // Varsayılan olarak 'user' rolünü ata
+        // Assign 'user' role by default
         Role userRole = roleRepository.findByName("user").orElseThrow(() -> new EntityNotFoundException("role user is not defined yet"));
         user.getRoles().add(userRole);
 
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityAlreadyExistsException("User already exists with the given username.");
         }
 
-        // 'admin' rolünü ata
+        // Assign 'admin' role
         Role userRole = roleRepository.findByName("admin").orElseThrow(() -> new EntityNotFoundException("role user is not defined yet"));
         user.getRoles().add(userRole);
 
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
         Pageable pageable = PageRequest.of(page, size);
         Page<User> userPage = userRepository.findAll(pageable);
 
-        // Page<ProductDto>'ya dönüştürme
+        // Convert to Page<UserDto>
         List<UserDto> userDtos = userPage.stream()
                 .map(UserMapper::mapEntityToDto)
                 .collect(Collectors.toList());
@@ -106,22 +106,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(Long id, UserInputDto userInputDto) {
-        // Kullanıcıyı ID'ye göre bul
+        // Find user by ID
         User existingUser = getUserById(id);
 
-        // Kullanıcıyı DTO'dan güncelle
+        // Update user from DTO
         User updatedUser = UserMapper.mapInputDtoToEntity(userInputDto);
 
-        // Kullanıcının mevcut rol ve diğer bilgilerini koru
+        // Preserve user's existing roles and other information
         existingUser.setUsername(updatedUser.getUsername());
         existingUser.setName(updatedUser.getName());
         existingUser.setSurname(updatedUser.getSurname());
         existingUser.setPassword(updatedUser.getPassword());
 
-        // Kullanıcıyı veritabanına kaydet
+        // Save user to database
         User savedUser = userRepository.save(existingUser);
 
-        // DTO olarak döndür
+        // Return as DTO
         return UserMapper.mapEntityToDto(savedUser);
     }
 
@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         return user.getFavoriteProducts().stream()
-                .map(ProductMapper::mapEntityToDto) // Favori ürünleri ProductDto'ya dönüştürüyoruz
+                .map(ProductMapper::mapEntityToDto) // Convert favorite products to ProductDto
                 .collect(Collectors.toList());
     }
 
@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         return user.getBlacklistedSellers().stream()
-                .map(SellerMapper::mapEntityToDto) // Blacklist'teki Seller'ları SellerDto'ya dönüştürüyoruz
+                .map(SellerMapper::mapEntityToDto) // Convert blacklisted Sellers to SellerDto
                 .collect(Collectors.toList());
     }
 

@@ -11,7 +11,7 @@ const useUserRoute = () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          // belki daha farklı bir sayfa açılabilir burada
+          // Maybe a different page could be opened here
           router.push('/forbidden');
           return;
         }
@@ -25,11 +25,11 @@ const useUserRoute = () => {
 
         const role = response.data.data;
         if (!(role === 'user' || role === 'admin')) {
-          router.push('/forbidden'); // user değilse Forbidden sayfasına yönlendir
+          router.push('/forbidden'); // Redirect to Forbidden page if not a user
         }
       } catch (error) {
         console.error('Error checking admin role:', error);
-        router.push('/forbidden'); // Hata durumunda forbidden sayfasına yönlendir
+        router.push('/forbidden'); // Redirect to forbidden page on error
       }
     };
 

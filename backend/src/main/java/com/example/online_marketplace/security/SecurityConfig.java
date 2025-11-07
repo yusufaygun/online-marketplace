@@ -75,27 +75,27 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(customizer -> customizer
-                        .requestMatchers(AUTH_WHITELIST).anonymous() // Whitelist URL'ler için anonim erişime izin ver
-                        .requestMatchers(AUTH_ADMIN_LIST).hasAnyAuthority("admin") // admin kısmına sadece adminler erişebilsin
-                        .anyRequest().hasAnyAuthority("admin", "user") // Diğer tüm istekler için "ADMIN" veya "USER" rolü gerekli
+                        .requestMatchers(AUTH_WHITELIST).anonymous() // Allow anonymous access for whitelist URLs
+                        .requestMatchers(AUTH_ADMIN_LIST).hasAnyAuthority("admin") // Only admins can access admin section
+                        .anyRequest().hasAnyAuthority("admin", "user") // All other requests require "ADMIN" or "USER" role
                 )
                 .authenticationProvider(authenticationProvider(passwordEncoder())) // Use the DaoAuthenticationProvider
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class) // Add the JWT filter
                 .exceptionHandling(customizer -> customizer
-                        .accessDeniedHandler((req, resp, ex) -> resp.setStatus(HttpServletResponse.SC_FORBIDDEN)) // Erişim reddedildiğinde
-                        .authenticationEntryPoint((req, resp, ex) -> resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED)) // Yetkisiz erişimde
+                        .accessDeniedHandler((req, resp, ex) -> resp.setStatus(HttpServletResponse.SC_FORBIDDEN)) // When access is denied
+                        .authenticationEntryPoint((req, resp, ex) -> resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED)) // When unauthorized access
                 )
                 .formLogin(customizer -> customizer
                         .loginProcessingUrl("/login")
-                        .successHandler((req, resp, auth) -> resp.setStatus(HttpServletResponse.SC_OK)) // Giriş başarılı olursa
-                        .failureHandler((req, resp, ex) -> resp.setStatus(HttpServletResponse.SC_FORBIDDEN)) // Giriş başarısız olursa
+                        .successHandler((req, resp, auth) -> resp.setStatus(HttpServletResponse.SC_OK)) // When login is successful
+                        .failureHandler((req, resp, ex) -> resp.setStatus(HttpServletResponse.SC_FORBIDDEN)) // When login fails
                 )
                 .logout(customizer -> customizer
                         .logoutUrl("/logout")
-                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()) // Çıkış başarılı olduğunda
+                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()) // When logout is successful
                 )
-                .csrf(AbstractHttpConfigurer::disable) // CSRF'yi devre dışı bırak
-                .httpBasic(Customizer.withDefaults()); // Temel HTTP kimlik doğrulaması kullan
+                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF
+                .httpBasic(Customizer.withDefaults()); // Use basic HTTP authentication
 
         return http.build();
     }
@@ -103,7 +103,7 @@ public class SecurityConfig {
     @Bean
     public CommandLineRunner setupDefaultUser(UserService userService, RoleService roleService) {
         return args -> {
-            // Admin rolünü ve kullanıcıyı oluştur
+            // Create admin and user roles
             if (roleService.findRoleByName("ADMIN") == null) {
                 roleService.saveRole(new Role("ADMIN"));
             }
@@ -111,30 +111,30 @@ public class SecurityConfig {
                 roleService.saveRole(new Role("USER"));
             }
 
-            // Eğer admin yoksa, bir admin oluştur
+            // Create an admin if it doesn't exist
             /*if (userService.findByUsername("admin") == null) {
             }*/
 
             UserInputDto admin = new UserInputDto();
             admin.setUsername("admin");
-            admin.setPassword("password123"); // Parolanın güçlü ve hash'lenmiş olduğundan emin olun
+            admin.setPassword("password123"); // Ensure the password is strong and hashed
             admin.setName("Admin");
             admin.setSurname("User");
             UserDto savedAdmin = userService.saveUser(admin);
             userService.assignRoleToUser(savedAdmin.getUsername(), "ADMIN");
 
-            // Eğer user yoksa, bir user oluştur
+            // Create a user if it doesn't exist
             /*if (userService.findByUsername("user") == null) {
             }*/
             UserInputDto user = new UserInputDto();
             user.setUsername("user");
-            user.setPassword("password123"); // Parolanın güçlü ve hash'lenmiş olduğundan emin olun
+            user.setPassword("password123"); // Ensure the password is strong and hashed
             user.setName("Regular");
             user.setSurname("User");
             UserDto savedUser = userService.saveUser(user);
             userService.assignRoleToUser(savedUser.getUsername(), "USER");
 
-            /*// Satıcıları oluştur
+            /*// Create sellers
             Seller seller1 = new Seller();
             seller1.setName("adidas");
             sellerService.saveSeller(seller1);
@@ -143,7 +143,7 @@ public class SecurityConfig {
             seller1.setName("modesan");
             sellerService.saveSeller(seller2);
 
-            // satıcılara ürün ekle
+            // Add products to sellers
             Product product1 = new Product();
             product1.setName("sneaker");
             product1.setDescription("an adidas sneaker");

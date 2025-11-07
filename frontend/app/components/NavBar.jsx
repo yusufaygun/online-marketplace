@@ -25,9 +25,9 @@ const NavBar = () => {
             'Authorization': `Bearer ${token}`,
           },
         });
-        setIsLoggedIn(true); // Kullanıcı oturum açmış
+        setIsLoggedIn(true); // User is logged in
 
-        // Kullanıcı rolünü kontrol et
+        // Check user role
         const roles = response.data.data.roles;
         if (roles.includes('admin')) {
           setIsAdmin(true);
@@ -41,7 +41,7 @@ const NavBar = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Oturum tokenını kaldır
+    localStorage.removeItem('token'); // Remove session token
     setIsLoggedIn(false);
     setIsAdmin(false);
     router.push('/auth/login');

@@ -10,6 +10,6 @@ import java.util.List;
 public class SellerDto {
     private Long id;
     private String name;
-    private List<ProductDto> products; // Seller'ın sattığı ürünler
+    private List<ProductDto> products; // Products sold by the seller
 
 }

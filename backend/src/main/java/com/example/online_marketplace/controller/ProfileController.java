@@ -54,7 +54,7 @@ public class ProfileController {
     public ApiResponse<UserDto> removeProductFromFavorites(Authentication authentication, @RequestBody Map<String, Long> request) {
         String username = authentication.getName();
         UserDto user = userService.findByUsername(username);
-        Long productId = request.get("productId");  // productId'yi map'ten alıyoruz
+        Long productId = request.get("productId");  // Get productId from the map
         UserDto userDto = userService.removeProductFromFavorites(user.getId(), productId);
         return new ApiResponse<>(true, "Product removed from favorites successfully", userDto);
     }
@@ -91,7 +91,7 @@ public class ProfileController {
     public ApiResponse<UserDto> removeSellerFromBlacklist(Authentication authentication, @RequestBody Map<String, Long> request) {
         String username = authentication.getName();
         UserDto user = userService.findByUsername(username);
-        Long sellerId = request.get("sellerId");  // sellerId'yi map'ten alıyoruz
+        Long sellerId = request.get("sellerId");  // Get sellerId from the map
         UserDto userDto = userService.removeSellerFromBlacklist(user.getId(), sellerId);
         return new ApiResponse<>(true, "Seller removed from blacklist successfully", userDto);
     }

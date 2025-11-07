@@ -7,7 +7,7 @@ import useAdminRoute from '@/app/hooks/useAdminRoute';
 const BACKEND_URL = 'http://localhost:8080';
 
 const ManageUsers = () => {
-  useAdminRoute(); // Admin kontrolü burada 
+  useAdminRoute(); // Admin check here 
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
